@@ -11,3 +11,13 @@ centered framing, eye-level camera angle, official documentation style, high det
 realistic skin texture with visible pores, professional law enforcement photography, neutral color grading, 
 ID board visible at bottom with prisoner number and date, serious demeanor, direct eye contact with camera, 
 photorealistic, documentary photography style, 8k resolution, ultra detailed."""
+
+
+
+prompts = [
+    "Light-medium skintone male, oval face, neutral expression. Short dark brown thick hair, straight hairline, smooth forehead. Short well-groomed beard. Medium round dark brown eyes, average lashes. Medium-thick slightly arched dark brown brows. Straight medium nose, average lips with thinner upper lip. Strong jawline, defined chin, average ears, no scars. Mugshot style, plain grey background, front-facing, studio lighting.",
+    "Female, early 30s, neutral expression, medium length blonde hair pulled back, light makeup, plain blue background, front-facing, professional mugshot style.",
+    "Male, late 40s, slightly wrinkled face, short grey hair, stubble beard, dark clothing, white background, straight on, mugshot photography.",
+    "Female, mid-20s, dark skin tone, natural curly black hair, no visible jewelry, neutral expression, plain white wall background, clear focus, mugshot.",
+    "Male, elderly, bald head with some grey hair on sides, glasses, slight frown, simple black t-shirt, beige background, front-view, mugshot camera style."
+]
