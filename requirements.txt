@@ -4,6 +4,7 @@ accelerate
 bitsandbytes 
 xformers
 peft
+safetensors
 pillow 
 torch==2.9.0
 diffusers
