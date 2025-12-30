@@ -1,0 +1,11 @@
+
+datasets 
+transformers 
+accelerate 
+bitsandbytes 
+xformers
+peft
+pillow 
+diffusers
+torch==2.9.0
+!pip install -q git+https://github.com/huggingface/diffusers
