@@ -2,7 +2,7 @@
 #!/usr/bin/env python3
 
 """
-Simple script to download a RealVizXL (or any HuggingFace) model
+Script to download a RealVizXL (or any HuggingFace) model
 and save the full snapshot to a target directory.
 
 Just edit the variables below, then run:

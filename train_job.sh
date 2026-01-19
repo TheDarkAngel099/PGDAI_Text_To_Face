@@ -3,8 +3,8 @@
 #SBATCH -A cdac
 #SBATCH -p standard
 #SBATCH -N 1
-#SBATCH --gres=gpu:1
-#SBATCH --cpus-per-task=4
+#SBATCH --gpus-per-node=4            # Change to 1/2/4/8 as needed
+#SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH -t 24:00:00
 #SBATCH -o %x-%j.out
@@ -60,9 +60,14 @@ module load cuda/12.4
 source /home/dai01/Text_To_Face/miniconda_new/bin/activate
 
 # Activate your Python env (created previously)
-conda activate "$ENV_DIR"
-
-echo "[INFO] Using existing dependencies from conda environment."
+# If you need to create it the first time:
+# conda create -y -p "$ENV_DIR" python=3.10
+# conda activate "$ENV_DIR"
+# pip install --upgrade pip
+# pip install --extra-index-url https://download.pytorch.org/whl/cu121 torch torchvision torchaudio
+# pip install diffusers[torch] transformers accelerate datasets xformers safetensors pillow tqdm peft huggingface_hub
+# pip install lpips scikit-image tensorboard
+source activate "$ENV_DIR" 2>/dev/null || conda activate "$ENV_DIR"
 
 # HF cache (optional but recommended for speed)
 export HF_CACHE="$BASE_DIR/cache/huggingface"
