@@ -32,16 +32,17 @@ export OUT_DIR="$BASE_DIR/sd_training/outputs"
 export CKPT_DIR="$BASE_DIR/sd_training/checkpoints"
 
 # Training hyperparameters for RealViz
-export RESOLUTION=768                  # RealViz works well at 768px
+export RESOLUTION=512                  # RealViz optimized at 512px
 export BATCH_PER_GPU=2                 # Adjust per GPU VRAM
 export GRAD_ACCUM=2                    # Effective batch = gpus * BATCH_PER_GPU * GRAD_ACCUM
-export LEARNING_RATE=1e-4              # Higher LR for RealViz LoRA
+export LEARNING_RATE=7e-5              # RealViz optimized learning rate
+export LR_WARMUP_STEPS=100             # Warmup for stability
 export MAX_TRAIN_STEPS=3000
-export CHECKPOINT_STEPS=300
+export CHECKPOINT_STEPS=500            # Save fewer checkpoints to reduce disk usage
 export SEED=42
 
 # Validation prompt (quick sanity check)
-export VAL_PROMPT="a person, professional headshot, detailed face"
+export VAL_PROMPT="mugshot, frontal view, centered, neutral expression, plain background"
 
 ################################################################################
 #                        >>> END OF EDITABLE VARIABLES <<<
@@ -127,8 +128,10 @@ accelerate launch --mixed_precision=fp16 --num_processes=auto --num_machines=1 \
   --gradient_accumulation_steps "$GRAD_ACCUM" \
   --learning_rate "$LEARNING_RATE" \
   --lr_scheduler "constant" \
+  --lr_warmup_steps "$LR_WARMUP_STEPS" \
   --max_train_steps "$MAX_TRAIN_STEPS" \
   --checkpointing_steps "$CHECKPOINT_STEPS" \
+  --checkpoints_total_limit 3 \
   --resume_from_checkpoint "latest" \
   --seed "$SEED" \
   --enable_xformers_memory_efficient_attention \
