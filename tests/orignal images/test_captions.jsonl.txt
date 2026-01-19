@@ -1,0 +1,11 @@
+{"image": "images/R88046.jpg", "text": "A dark skinned late teenage or young adult female with short brown curly hair, large brown eyes, a flat forehead with small bumps, a wide nose that curves upward at its tip, full lips, a slightly pointed chin, and a rounded lower jaw. She has no beard visible in the image, wearing an unbuttoned shirt showing off her neckline."}
+
+{"image": "images/N01536.jpg", "text": "A dark skinned man wearing a light blue shirt stands against an orange background. His bald head contrasts sharply with his skin tone. The man's large blue eyes dominate his face as he stares directly at the camera. With no beard visible, his thin lips form a straight line across his lower face. Despite having a flat forehead, there are noticeable wrinkles surrounding his eyes that add character to his overall look."}
+
+{"image": "images/C01793.jpg", "text": "A caucasian male in his mid-to-late fifties with gray or white hair, a flat wrinkled forehead, a slight recessed hairline, dark blue almond shaped eyes, thin light brown brows, a wide straight nose, thick lips partially hidden by a mustache, and a slightly square chin and jawline."}
+
+{"image": "images/M29349.jpg", "text": "A mid-forties to early fifties caucasian male with a flat forehead, no wrinkles, and a slight recessed hairline. His light brown hair is short and straight, covering his ears while giving him an approachable look."}
+
+{"image": "images/R48667.jpg", "text": "A mid to late fifty's African American male wearing glasses with a light beard. His skin tone appears to be lighter than average. The man sports a flat, slightly wrinkled forehead that slopes downward from his wide, rounded cheekbones. With a recurring hairline in the middle of his scalp, he exhibits a full head of short, dark brown curls."}
+
+{"image": "images/X76448.jpg", "text": "A late teenage or young adult dark skinned female with large brown eyes, a flat forehead with a slight central bump, a slightly receding hairline, and a round nose that's slightly wider at its base than its tip. She has black, long straight hair, thin upper lips, larger bottom lips, and a square jawline. Her chin is pointy, and her ears are visible."}
