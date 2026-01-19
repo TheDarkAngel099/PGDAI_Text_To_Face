@@ -1,10 +1,10 @@
 
 #!/bin/bash
-#SBATCH -J realvizxl_lora_train
-#SBATCH -A <YOUR_ACCOUNT>            # TODO: Param project/account
-#SBATCH -p <YOUR_GPU_PARTITION>      # TODO: e.g., a100q / gpuq
+#SBATCH -J realviz_lora_train
+#SBATCH -A default
+#SBATCH -p gpuready
 #SBATCH -N 1
-#SBATCH --gpus-per-node=4            # Change to 1/2/4/8 as needed
+#SBATCH --gpus-per-node=2            # Change to 1/2/4/8 as needed
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH -t 24:00:00
@@ -15,33 +15,33 @@
 #                          >>> EDIT THESE VARIABLES <<<
 ################################################################################
 
-# Base workspace (prefer fast scratch if available on Param)
-export BASE_DIR=${SCRATCH:-/scratch/$USER}/realviz_xl_project
+# Base workspace
+export BASE_DIR=/home/dai01/Text_To_Face
 
-# Path where you saved the model once (downloaded earlier)
-export MODEL_DIR="$BASE_DIR/cache/models/RealVisXL_V4.0"   # e.g., /scratch/$USER/models/RealVisXL_V4.0
+# Path where you saved the model (downloaded earlier)
+export MODEL_DIR="$BASE_DIR/sd_training/RealVisXL_Model"
 
 # Path to your dataset root with images/, captions/, metadata.jsonl
-export DATASET_DIR="$BASE_DIR/data/lora_dataset"
+export DATASET_DIR="$BASE_DIR/lora_dataset"
 
 # Python environment (conda path)
-export ENV_DIR="$BASE_DIR/env/py310"
+export ENV_DIR=sd_training
 
 # Where to put outputs and checkpoints
-export OUT_DIR="$BASE_DIR/outputs"
-export CKPT_DIR="$BASE_DIR/checkpoints"
+export OUT_DIR="$BASE_DIR/sd_training/outputs"
+export CKPT_DIR="$BASE_DIR/sd_training/checkpoints"
 
-# Training hyperparameters
-export RESOLUTION=512                  # SDXL LoRA common setting; increase later if desired
-export BATCH_PER_GPU=2                 # Adjust per A100 VRAM; try 2–4 at 512
+# Training hyperparameters for RealViz
+export RESOLUTION=768                  # RealViz works well at 768px
+export BATCH_PER_GPU=2                 # Adjust per GPU VRAM
 export GRAD_ACCUM=2                    # Effective batch = gpus * BATCH_PER_GPU * GRAD_ACCUM
-export LEARNING_RATE=5e-5
-export MAX_TRAIN_STEPS=5000
-export CHECKPOINT_STEPS=500
+export LEARNING_RATE=1e-4              # Higher LR for RealViz LoRA
+export MAX_TRAIN_STEPS=3000
+export CHECKPOINT_STEPS=300
 export SEED=42
 
 # Validation prompt (quick sanity check)
-export VAL_PROMPT="portrait photo, centered mugshot, neutral expression"
+export VAL_PROMPT="a person, professional headshot, detailed face"
 
 ################################################################################
 #                        >>> END OF EDITABLE VARIABLES <<<
@@ -58,13 +58,6 @@ module load cuda/12.1        # Adjust if Param provides a different CUDA module
 module load anaconda         # Or the module name Param uses for conda
 
 # Activate your Python env (created previously)
-# If you need to create it the first time:
-# conda create -y -p "$ENV_DIR" python=3.10
-# conda activate "$ENV_DIR"
-# pip install --upgrade pip
-# pip install --extra-index-url https://download.pytorch.org/whl/cu121 torch torchvision torchaudio
-# pip install diffusers[torch] transformers accelerate datasets xformers safetensors pillow tqdm peft huggingface_hub
-# pip install lpips scikit-image tensorboard
 source activate "$ENV_DIR" 2>/dev/null || conda activate "$ENV_DIR"
 
 # HF cache (optional but recommended for speed)
