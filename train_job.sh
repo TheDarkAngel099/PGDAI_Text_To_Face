@@ -1,10 +1,9 @@
-
 #!/bin/bash
 #SBATCH -J realviz_lora_train
-#SBATCH -A default
-#SBATCH -p gpuready
+#SBATCH -A cdac
+#SBATCH -p standard
 #SBATCH -N 1
-#SBATCH --gpus-per-node=2            # Change to 1/2/4/8 as needed
+#SBATCH --gres=gpu:2
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH -t 24:00:00
@@ -19,10 +18,10 @@
 export BASE_DIR=/home/dai01/Text_To_Face
 
 # Path where you saved the model (downloaded earlier)
-export MODEL_DIR="$BASE_DIR/sd_training/RealVisXL_Model"
+export MODEL_DIR="$BASE_DIR/sd_training/RealVizXL_Model"
 
 # Path to your dataset root with images/, captions/, metadata.jsonl
-export DATASET_DIR="$BASE_DIR/lora_dataset"
+export DATASET_DIR="$BASE_DIR/vlm_llava/project_results/lora_dataset"
 
 # Python environment (conda path)
 export ENV_DIR=sd_training
@@ -69,21 +68,12 @@ export HUGGINGFACE_HUB_CACHE="$HF_CACHE"
 export HF_HOME="$HF_CACHE"
 
 # -------------------------- Training Script Staging ---------------------------
-# If you don't already have the SDXL LoRA trainer, try to fetch it now.
-# (Replace with a local copy if your compute nodes have no internet.)
-export CODE_DIR="$BASE_DIR/code"
-mkdir -p "$CODE_DIR"
+# Training script is in sd_training folder
+export CODE_DIR="$BASE_DIR/sd_training"
 if [ ! -f "$CODE_DIR/train_text_to_image_lora_sdxl.py" ]; then
-  echo "[INFO] SDXL LoRA training script not found; attempting to download..."
-  if [ -f "$CODE_DIR/sdxl_script_download.py" ]; then
-    python "$CODE_DIR/sdxl_script_download.py" || {
-      echo "[ERROR] Could not fetch training script. Pre-stage it into $CODE_DIR."
-      exit 1
-    }
-  else
-    echo "[ERROR] sdxl_script_download.py not present at $CODE_DIR. Please copy it or the trainer script."
-    exit 1
-  fi
+  echo "[ERROR] Training script not found at: $CODE_DIR/train_text_to_image_lora_sdxl.py"
+  echo "        Please ensure the script is present in the sd_training directory."
+  exit 1
 fi
 
 # ------------------------------ Sanity Checks ---------------------------------
