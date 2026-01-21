@@ -1,0 +1,14 @@
+
+model:
+  repo_or_path: /abs/path/to/realvis_xl_diffusers       # SDXL-based
+  vae_path: /abs/path/to/vae_llava_1_5                  # SDXL‑compatible VAE
+  lora_weights: null                                    # or path to your LoRA
+  device: cuda
+  dtype: fp16
+inference:
+  guidance_scale: 7.5
+  num_inference_steps: 40
+  height: 768                                           # SDXL typically ≥768
+  width:  768
+  seed: null
+  negative_prompt_file: App/core/neg_prompts.txt

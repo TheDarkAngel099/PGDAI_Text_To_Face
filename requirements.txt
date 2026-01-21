@@ -7,4 +7,5 @@ peft
 pillow 
 torch==2.9.0
 diffusers
+compel>=2.0.2
 !pip install -q git+https://github.com/huggingface/diffusers

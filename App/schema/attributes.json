@@ -1,0 +1,120 @@
+{
+  "Skin color and gender": {
+    "type": "dropdown",
+    "options": [
+      "White male, fair",
+      "White female, fair",
+      "Brown male, medium",
+      "Brown female, medium",
+      "Black male, dark",
+      "Black female, dark"
+    ],
+    "help": "Select skin tone & sex"
+  },
+  "Overall facial appearance": {
+    "type": "dropdown",
+    "options": [
+      "Young, approx 20",
+      "Adult, approx 30",
+      "Middle-aged, approx 45",
+      "Senior, approx 65"
+    ]
+  },
+  "Hair": {
+    "type": "dropdown",
+    "options": [
+      "Blonde, short, receding hairline",
+      "Brown, short",
+      "Black, short",
+      "Gray, short",
+      "Bald"
+    ]
+  },
+  "Forehead": {
+    "type": "dropdown",
+    "options": [
+      "High, smooth",
+      "Average",
+      "Low, wrinkled"
+    ]
+  },
+  "Hairline": {
+    "type": "dropdown",
+    "options": [
+      "Receding, M-shape",
+      "Straight",
+      "Widow's peak"
+    ]
+  },
+  "Beard": {
+    "type": "dropdown",
+    "options": [
+      "Goatee, reddish-brown",
+      "Stubble",
+      "Full beard",
+      "None"
+    ]
+  },
+  "Eyes": {
+    "type": "dropdown",
+    "options": [
+      "Blue, oval, no glasses",
+      "Brown, round, no glasses",
+      "Green, almond, no glasses",
+      "Hazel, oval, glasses"
+    ]
+  },
+  "Eyebrows": {
+    "type": "dropdown",
+    "options": [
+      "Brown, thick",
+      "Black, thick",
+      "Light, thin"
+    ]
+  },
+  "Nose": {
+    "type": "dropdown",
+    "options": [
+      "Straight, average width",
+      "Broad, flat",
+      "Narrow, pointed"
+    ]
+  },
+  "Lips": {
+    "type": "dropdown",
+    "options": [
+      "Thin, pink",
+      "Average, natural",
+      "Full, dark"
+    ]
+  },
+  "Chin and jawline": {
+    "type": "dropdown",
+    "options": [
+      "Square jaw, dimpled chin",
+      "Rounded jaw",
+      "Pointed chin"
+    ]
+  },
+  "Ears": {
+    "type": "dropdown",
+    "options": [
+      "Visible, attached lobes",
+      "Visible, detached lobes",
+      "Not visible"
+    ]
+  },
+  "Scars": {
+    "type": "dropdown",
+    "options": [
+      "None",
+      "Eyebrow scar",
+      "Cheek scar",
+      "Forehead scar"
+    ]
+  },
+  "Additional details": {
+    "type": "text",
+    "placeholder": "Any extra descriptors: complexion, freckles, wrinkles, etc."
+  }
+}
