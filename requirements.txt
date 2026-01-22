@@ -2,19 +2,19 @@
 # Install this first, then backend and frontend specific requirements
 
 # Backend Requirements
-fastapi==0.104.1
-uvicorn==0.24.0
-pydantic==2.5.0
-pydantic-settings==2.1.0
-python-dotenv==1.0.0
+fastapi>=0.104.1
+uvicorn>=0.24.0
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+python-dotenv>=1.0.0
 
 # Frontend Requirements
-streamlit==1.29.0
-requests==2.31.0
-pillow==10.1.0
+streamlit>=1.29.0
+requests>=2.31.0
+pillow>=11.0.0
 
 # Shared Utilities
-numpy==1.24.3
+numpy>=1.24.3
 
 # Optional: Deep Learning (uncomment when models are ready)
 # torch==2.1.0

@@ -66,12 +66,13 @@ class AppLauncher:
             return False
         
         try:
-            # Set environment to run backend
+            # Set environment to run backend using conda
             env = os.environ.copy()
             env['PYTHONPATH'] = str(BACKEND_DIR)
             
+            # Try to use conda run with text_to_face environment
             process = subprocess.Popen(
-                [sys.executable, str(backend_script)],
+                ["conda", "run", "-n", "text_to_face", "python", str(backend_script)],
                 cwd=str(BACKEND_DIR),
                 env=env,
                 stdout=subprocess.PIPE,
@@ -105,9 +106,10 @@ class AppLauncher:
             return False
         
         try:
+            # Use conda run to ensure correct environment
             process = subprocess.Popen(
                 [
-                    sys.executable, "-m", "streamlit", "run",
+                    "conda", "run", "-n", "text_to_face", "python", "-m", "streamlit", "run",
                     str(frontend_script),
                     "--logger.level=info",
                     f"--server.port={self.frontend_port}",

@@ -40,7 +40,7 @@ def generate_caption_pipeline(user_prompt: str) -> str:
     #         output = model.generate(
     #             **inputs,
     #             max_new_tokens=150,
-    #             temperature=0.7,
+    #             temperature=0.1,
     #             top_p=0.9
     #         )
     #     
