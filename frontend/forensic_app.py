@@ -11,6 +11,7 @@ from io import BytesIO
 from PIL import Image
 import json
 from datetime import datetime
+from features_database import FACE_FEATURES_DB, DEMOGRAPHICS
 
 # ============================================================================
 # PAGE CONFIGURATION & THEME
@@ -76,118 +77,6 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-
-# ============================================================================
-# FACE FEATURES DATABASE
-# ============================================================================
-
-FACE_FEATURES_DB: Dict[str, Dict[str, List[str]]] = {
-    "Face Shape": {
-        "shape": ["Oval", "Round", "Square", "Rectangular", "Heart", "Diamond", "Triangular", "Other"]
-    },
-    "Forehead": {
-        "height": ["Low", "Medium", "High", "Very High", "Other"],
-        "width": ["Narrow", "Medium", "Wide", "Very Wide", "Other"],
-        "features": ["Wrinkles", "Scars", "Birthmarks", "Tattoo", "None", "Other"]
-    },
-    "Eyes": {
-        "color": ["Black", "Dark Brown", "Brown", "Hazel", "Light Brown", "Green", "Blue", "Gray", "Heterochromia", "Other"],
-        "shape": ["Almond", "Round", "Hooded", "Monolid", "Upturned", "Downturned", "Asymmetrical", "Other"],
-        "size": ["Very Small", "Small", "Medium", "Large", "Very Large", "Other"],
-        "distance": ["Close Set", "Normal", "Wide Set", "Very Wide", "Other"],
-        "eyebrows": ["Thin", "Medium", "Thick", "Very Thick", "Unibrow", "Absent", "Tattooed", "Other"],
-        "other_features": ["Scar", "Birthmark", "Tattoo", "Glasses/Contacts", "Lazy Eye", "None", "Other"]
-    },
-    "Nose": {
-        "shape": ["Straight", "Crooked", "Hooked", "Bulbous", "Pointed", "Flat", "Aquiline", "Other"],
-        "width": ["Narrow", "Medium", "Wide", "Very Wide", "Other"],
-        "length": ["Short", "Medium", "Long", "Very Long", "Other"],
-        "bridge": ["Straight", "Concave", "Convex", "Broken", "Other"],
-        "tip": ["Pointed", "Rounded", "Bulbous", "Split", "Other"],
-        "nostrils": ["Small", "Medium", "Large", "Flared", "Other"],
-        "features": ["Scar", "Pimple", "Birthmark", "Tattoo", "Piercing", "None", "Other"]
-    },
-    "Mouth": {
-        "shape": ["Wide", "Normal", "Small", "Cupid Bow", "Thin Lips", "Full Lips", "Asymmetrical", "Other"],
-        "upper_lip": ["Thin", "Medium", "Full", "Very Full", "Protruding", "Other"],
-        "lower_lip": ["Thin", "Medium", "Full", "Very Full", "Protruding", "Other"],
-        "color": ["Pale", "Pink", "Dark Pink", "Red", "Brown", "Other"],
-        "distinguishing": ["Scar", "Cleft Lip", "Gap Teeth", "Tattoo", "Piercing", "Gold Teeth", "None", "Other"]
-    },
-    "Cheeks": {
-        "shape": ["Hollow", "Normal", "Full", "Very Full", "Prominent", "Other"],
-        "color": ["Pale", "Normal", "Flushed", "Red", "Pigmented", "Other"],
-        "features": ["Acne", "Acne Scars", "Birthmark", "Tattoo", "Piercing", "Dimples", "Freckles", "None", "Other"]
-    },
-    "Chin": {
-        "shape": ["Pointed", "Rounded", "Square", "Prominent", "Receding", "Cleft", "Other"],
-        "size": ["Small", "Medium", "Large", "Very Large", "Other"],
-        "features": ["Dimple", "Scar", "Birthmark", "Tattoo", "Beard Stubble", "Beard", "None", "Other"],
-        "beard": ["None", "Goatee", "Full Beard", "Stubble", "Van Dyke", "Soul Patch", "Other"]
-    },
-    "Scars & Marks": {
-        "location": ["Forehead", "Cheek", "Chin", "Nose", "Lips", "Eye Area", "Neck", "Multiple", "Other"],
-        "type": ["Scar", "Birthmark", "Tattoo", "Mole", "Wart", "Acne Scar", "Burn Mark", "Other"],
-        "size": ["Small (< 1 inch)", "Medium (1-2 inches)", "Large (2-3 inches)", "Very Large (> 3 inches)", "Other"],
-        "appearance": ["Raised", "Indented", "Flat", "Discolored", "Other"]
-    },
-    "Hair": {
-        "color": ["Black", "Dark Brown", "Brown", "Light Brown", "Blonde", "Red", "Gray", "White", "Dyed", "Other"],
-        "texture": ["Straight", "Wavy", "Curly", "Coily", "Kinky", "Braided", "Other"],
-        "length": ["Bald", "Very Short", "Short", "Medium", "Long", "Very Long", "Other"],
-        "style": ["Shaved", "Crew Cut", "Fade", "Afro", "Dreadlocks", "Braids", "Messy", "Combed Back", "Side Part", "Other"],
-        "coverage": ["Full Head", "Receding", "Widow's Peak", "Bald Spot", "Thinning", "Other"]
-    }
-}
-
-DEMOGRAPHICS: Dict[str, List[str]] = {
-    "Gender": ["Male", "Female", "Non-Binary", "Prefer Not to Say", "Other"],
-    "Race/Ethnicity": [
-        "Caucasian/White",
-        "African American/Black",
-        "Asian",
-        "Hispanic/Latino",
-        "Middle Eastern/North African",
-        "Native American/Indigenous",
-        "Pacific Islander",
-        "South Asian",
-        "Mixed Race",
-        "Other"
-    ],
-    "Skin Tone": [
-        "Very Fair",
-        "Fair",
-        "Light",
-        "Medium Light",
-        "Medium",
-        "Medium Dark",
-        "Dark",
-        "Very Dark",
-        "Other"
-    ],
-    "Age Range": [
-        "Child (0-12)",
-        "Teenager (13-19)",
-        "Young Adult (20-30)",
-        "Adult (31-45)",
-        "Middle Aged (46-60)",
-        "Senior (61+)",
-        "Unknown"
-    ],
-    "Distinctive Features": [
-        "Tattoos",
-        "Piercings",
-        "Glasses",
-        "Facial Hair",
-        "Scars",
-        "Birthmarks",
-        "Freckles",
-        "Dimples",
-        "Large Ears",
-        "None Notable",
-        "Other"
-    ]
-}
 
 # ============================================================================
 # HELPER FUNCTIONS
@@ -360,12 +249,10 @@ with tab2:
                 
                 for attribute, values in attributes.items():
                     # Create unique keys for selectbox
-                    current_value = st.session_state.feature_selections[face_part].get(attribute, values[0])
-                    
                     selected_value = st.selectbox(
                         label=attribute.replace("_", " ").title(),
                         options=values,
-                        index=values.index(current_value) if current_value in values else 0,
+                        index=0,
                         key=f"{face_part}_{attribute}"
                     )
                     
