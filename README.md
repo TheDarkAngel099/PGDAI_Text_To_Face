@@ -220,11 +220,12 @@ This project is developed as part of the CDAC PGDAI Diploma Program.
 This project was developed collaboratively by:
 
 | Contributor | GitHub |
-| Nagarjuna| [@TheDarkAngel099](https://github.com/TheDarkAngel099) |
-| Samrudhi | [@Samrudhi2711](https://github.com/Samrudhi2711) | 
+|---|---|
+| Nagarjuna | [@TheDarkAngel099](https://github.com/TheDarkAngel099) |
+| Samrudhi | [@Samrudhi2711](https://github.com/Samrudhi2711) |
 | Satyam | [@Satyam0406](https://github.com/Satyam0406) |
-| Tanishq | [@Tanishq200326](https://github.com/Tanishq200326) | 
-| Shivam Pawar | [@theshivapawar](https://github.com/theshivapawar) | 
+| Tanishq | [@Tanishq200326](https://github.com/Tanishq200326) |
+| Shivam Pawar | [@theshivapawar](https://github.com/theshivapawar) |
 
 ---
 
