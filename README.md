@@ -187,32 +187,6 @@ The project is deployed on HuggingFace Spaces:
 
 ---
 
-## Usage Examples
-
-### Generate Images from Text Descriptions
-```python
-from Generation.generate_images_from_captions import StableDiffusionGenerator
-
-generator = StableDiffusionGenerator(
-    model_path="checkpoints/outputs_indian_finetuned_ckpt2700"
-)
-
-images = generator.generate(
-    prompts=["Indian male, mugshot, realistic, detailed"],
-    num_images=4
-)
-```
-
-### Auto-caption Images Using VLM
-```python
-from VLM.vlm_pipeline import VLMCaptioner
-
-captioner = VLMCaptioner(model_name="llava-1.5-13b")
-captions = captioner.caption_batch(image_paths)
-```
-
----
-
 ## Performance Considerations
 
 - **VRAM Requirements**: 16GB+ for full model inference
