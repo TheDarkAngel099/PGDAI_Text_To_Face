@@ -75,10 +75,10 @@ PGDAI_Text_To_Face/
 │   ├── generate_images_from_captions_sd15.py
 │   ├── generate_images_from_captions.py
 │   ├── test_indian_model.py
-│   └── gen_base_model_ground_truth.py
+│   └── gen_base_model.py
 │
 ├── Evaluation/                   # Model evaluation metrics
-│   ├── metrix.py
+│   ├── metrics.csv
 │   └── eval_metrics.sh
 │
 ├── text-to-face-app/            # Web application
