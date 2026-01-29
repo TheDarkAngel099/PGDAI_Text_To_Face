@@ -182,7 +182,7 @@ Pre-trained checkpoints available:
 
 ## Performance Considerations
 
-- **VRAM Requirements**: 40GB+ for full model inference
+- **VRAM Requirements**: 16GB+ for full model inference
 - **Training Time**: ~2-4 hours on NVIDIA A100 (2700 steps)
 - **Inference Speed**: ~5-10 seconds per image on GPU
 
