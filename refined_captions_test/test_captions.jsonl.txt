@@ -1,8 +1,0 @@
-{"file_name": "images/Y30380.jpg", "text": "48-year-old Hispanic male, short brown straight hair, full beard, wrinkled forehead, balding hairline, brown eyes, medium size slightly curved nose, thin lips, average size ears, no visible tattoos or scars."}
-{"file_name": "images/Y27444.jpg", "text": "33-year-old black female, short black curly hair, no visible facial hair, wrinkled forehead, receding hairline, brown eyes, small round nose, thin lips, small ears, no visible tattoos or scars."}
-{"file_name": "images/R87329.jpg", "text": "30-year-old white female, long straight brown hair, no visible facial hair, smooth forehead, small round nose, thin lips, average size ears, no visible tattoos or scars."}
-{"file_name": "images/Y15643.jpg", "text": "62-year-old Hispanic male, short brown goatee, wrinkled forehead, receding hairline, brown eyes, square chin, average size ears, no visible tattoos or scars."}
-{"file_name": "images/R63209.jpg", "text": "39-year-old black male, short black slicked back, short goatee, wrinkled forehead, receding hairline, brown eyes, square chin, average size ears, no visible tattoos or scars."}
-{"file_name": "images/Y10628.jpg", "text": "32-year-old Hispanic male, short black slicked back, short goatee, wrinkled forehead, receding hairline, brown eyes, square chin, average size ears, no visible tattoos or scars."}
-
-{"file_name": "images/M28649.jpg", "text": "30-year-old Asian male, black short straight hair, full beard, wrinkled forehead, receding hairline, brown eyes, square chin, average size ears, no visible tattoos or scars."}
