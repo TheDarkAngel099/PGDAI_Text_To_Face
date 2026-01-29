@@ -189,15 +189,6 @@ Pre-trained checkpoints available:
 
 ---
 
-## Citations & References
-
-- **Diffusion Models**: Ho et al., 2020 - "Denoising Diffusion Probabilistic Models"
-- **SDXL**: Podell et al., 2023 - "SDXL: Improving Latent Diffusion Models for High-Resolution Image Synthesis"
-- **LoRA**: Hu et al., 2021 - "LoRA: Low-Rank Adaptation of Large Language Models"
-- **LLaVA**: Liu et al., 2023 - "Visual Instruction Tuning"
-
----
-
 ## License
 
 This project is developed as part of the CDAC PGDAI Diploma Program.
