@@ -145,9 +145,21 @@ PGDAI_Text_To_Face/
 
 ## Results & Improvements
 
+### Performance Metrics Comparison
+
+The fine-tuned model demonstrates significant improvements across all evaluation metrics compared to the base model:
+
+![Metrics Comparison](Docs/Graphs/metrics_comparison_4plots.png)
+
+**Key Improvements:**
+- **CLIP Cosine Similarity**: +35.1% improvement (0.603 → 0.812)
+- **SSIM (Structural Similarity)**: +77.5% improvement (0.285 → 0.506)
+- **LPIPS (Perceptual Distance)**: +21.6% improvement (0.677 → 0.531, lower is better)
+- **Composite Score**: +47.8% improvement (0.403 → 0.596)
+
 ### Quantitative Metrics
 - **Training Efficiency**: ~80% reduction in trainable parameters via LoRA
-- **Auto-captioning**: 1000+ high-quality descriptions generated from VLM
+- **Auto-captioning**: 10000+ high-quality descriptions generated from VLM
 - **Model Consistency**: Improved output uniformity in forensic-style generation
 
 ### Qualitative Improvements
