@@ -180,33 +180,28 @@ Pre-trained checkpoints available:
 
 ---
 
-## Evaluation Metrics
-Metrics include:
-- FID (Fréchet Inception Distance)
-- LPIPS (Learned Perceptual Image Patch Similarity)
-- Consistency scores
-- Realism assessments
-
----
-
 ## Deployment
 
-### HuggingFace Spaces
-The project is deployed on HuggingFace Spaces:
+### Live Demos
+
+**HuggingFace Spaces**
+- **Live Demo**: [https://huggingface.co/spaces/Satyam0406/text_to_face](https://huggingface.co/spaces/Satyam0406/text_to_face)
 - Located in: `Hosting/huggingface spaces/`
 - App configuration: `app.py`
 - Dependencies: `requirements.txt`
 
+
+**Streamlit Frontend**
+- **Live Demo**: [https://text-to-face.streamlit.app](https://text-to-face.streamlit.app)
+- Located in: `text-to-face-app/frontend/`
+- Interactive web interface for image generation
 ---
 
 ## Performance Considerations
 
-- **VRAM Requirements**: 16GB+ for full model inference
-- **Training Time**: ~2-4 hours on NVIDIA A100 (2700 steps)
+- **VRAM Requirements**: 40GB+ for full model inference
+- **Training Time**: ~4-5 hours on NVIDIA A100 (2700 steps)
 - **Inference Speed**: ~5-10 seconds per image on GPU
-
----
-
 
 
 ---
