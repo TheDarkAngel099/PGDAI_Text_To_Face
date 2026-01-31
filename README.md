@@ -52,6 +52,10 @@ This project was developed and trained on **CDAC's Param Rudra Supercomputer**, 
 
 ```
 PGDAI_Text_To_Face/
+├── README.md                     # This file (project overview)
+├── PROJECT_DOCUMENTATION.md      # Comprehensive technical documentation
+├── requirements.txt              # Project dependencies
+│
 ├── Data_Preprocessing/           # Data preparation pipelines
 │   ├── Indian_dataset/          # Indian facial dataset processing
 │   ├── illinois_preprocessing/  # Illinois dataset processing
@@ -68,6 +72,7 @@ PGDAI_Text_To_Face/
 │   │   └── train_job.sh
 │   └── sd1.5/                  # Stable Diffusion 1.5 fine-tuning
 │       ├── train_text_to_image_lora_sd15.py
+│       ├── train_job_sd15_320.sh
 │       └── train_job_sd15_320_unetonly.sh
 │
 ├── Generation/                   # Image generation scripts
@@ -78,7 +83,8 @@ PGDAI_Text_To_Face/
 │   └── gen_base_model.py
 │
 ├── Evaluation/                   # Model evaluation metrics
-│   ├── metrics.csv
+│   ├── metrics.py               # Metric calculation (LPIPS, SSIM, CLIP)
+│   ├── compare_base_vs_finetuned.py  # Model comparison
 │   └── eval_metrics.sh
 │
 ├── text-to-face-app/            # Web application
@@ -104,13 +110,27 @@ PGDAI_Text_To_Face/
 
 ---
 
-## Setup & Installation
+## Documentation
+
+📚 **For comprehensive technical documentation, setup instructions, and detailed workflows, see [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md)**
+
+The detailed documentation includes:
+- Complete installation guide
+- 3-stage training pipeline diagram
+- Module-by-module descriptions
+- Training parameters and configurations
+- Evaluation metrics implementation details
+- Troubleshooting and FAQ
+
+---
+
+## Quick Setup
 
 ### Prerequisites
 - Python 3.8+
-- CUDA 11.0+ (for GPU acceleration)
-- 16GB+ RAM recommended
-- 50GB+ disk space for models
+- CUDA 11.8+ (for GPU acceleration)
+- 16GB+ RAM (24GB+ recommended)
+- 100GB+ disk space for models and datasets
 
 ---
 
@@ -128,7 +148,17 @@ PGDAI_Text_To_Face/
 
 ### 3. **Fine-tuning Scripts** (`Training/`)
 - **RealVisXL-4.0**: State-of-the-art realistic image generation
+  - Resolution: 320x320
+  - Batch Size: 4 (effective: 8 with gradient accumulation)
+  - Learning Rate: 1e-4 with linear decay
+  - Training Steps: 2,715 (3 epochs)
+  - LoRA Rank: 4
 - **Stable Diffusion 1.5**: Lightweight, efficient alternative
+  - Resolution: 320x320
+  - Batch Size: 16
+  - Learning Rate: 5e-5 (constant)
+  - Training Steps: 5,000
+  - LoRA Rank: 4
 - LoRA fine-tuning reduces parameters and training time by ~80%
 
 ### 4. **Image Generation** (`Generation/`)
@@ -150,6 +180,12 @@ PGDAI_Text_To_Face/
 The fine-tuned model demonstrates significant improvements across all evaluation metrics compared to the base model:
 
 ![Metrics Comparison](Docs/Graphs/metrics_comparison_4plots.png)
+
+**Implemented Evaluation Metrics:**
+- **LPIPS** (Learned Perceptual Image Patch Similarity): Perceptual image quality
+- **SSIM** (Structural Similarity Index): Structural alignment between images
+- **CLIP Cosine Similarity**: Semantic alignment using CLIP embeddings
+- **Composite Score**: Combined metric `(1 - LPIPS + SSIM + CLIP) / 3`
 
 **Key Improvements:**
 - **CLIP Cosine Similarity**: +35.1% improvement (0.603 → 0.812)
@@ -182,9 +218,15 @@ Pre-trained checkpoints available:
 
 ## Performance Considerations
 
-- **VRAM Requirements**: 16GB+ for full model inference
-- **Training Time**: ~2-4 hours on NVIDIA A100 (2700 steps)
-- **Inference Speed**: ~5-10 seconds per image on GPU
+### Training
+- **RealVisXL-4.0**: ~4-5 hours on single GPU (2,715 steps, 3 epochs)
+- **SD 1.5**: ~2-3 hours on single GPU (5,000 steps)
+- **VRAM Requirements**: 12GB+ (training), 24GB+ recommended
+
+### Inference
+- **RealVisXL**: 3-5 seconds per image (50 steps, A100 GPU)
+- **SD 1.5**: 1-2 seconds per image (30 steps, A100 GPU)
+- **Resolution**: 320x320 (native dataset resolution)
 
 
 ---
