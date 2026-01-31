@@ -258,6 +258,43 @@ python -c "import torch; print(f'PyTorch: {torch.__version__}, CUDA: {torch.cuda
 
 ## Module Descriptions
 
+### Training Pipeline Overview
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         3-STAGE TRAINING PIPELINE                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+  STAGE 1                    STAGE 2                    STAGE 3
+  DATA PROCESSING            VLM CAPTION GENERATION     REALVIZ TRAINING
+  
+  ┌──────────────────┐      ┌──────────────────┐      ┌──────────────────┐
+  │   Raw Images     │      │  LLaVA-1.5-13b   │      │ RealVisXL-4.0    │
+  │  (Indian/        │──→   │  Captioning      │──→   │ + LoRA Fine-tune │
+  │  Illinois)       │      │  (Auto-describe) │      │                  │
+  └──────────────────┘      └──────────────────┘      └──────────────────┘
+         │                          │                         │
+         ├─ Face Detection          ├─ Image-Caption          ├─ Initialize LoRA
+         ├─ Crop & Normalize        │  Dataset CSV            ├─ Train on Captions
+         ├─ Data Validation         ├─ Generate Metadata      ├─ Save Checkpoints
+         └─ Metadata CSV            └─ Review Captions        └─ LoRA Weights
+              │                           │                         │
+              ▼                           ▼                         ▼
+         Clean Dataset            Image-Caption Pairs      Fine-tuned Model
+         + Metadata                + Validation Split        + LoRA Weights
+                                                           (outputs_indian_
+                                                            finetuned_ckpt2700/)
+
+  Location:                 Location:                   Location:
+  Data_Preprocessing/       VLM/                        Training/RealVizXL/
+  {Indian,Illinois}/        vlm_pipeline.py             train_text_to_image_
+                                                        lora_sdxl.py
+```
+
+---
+
+## Module Descriptions
+
 ### 1. Data Preprocessing (`Data_Preprocessing/`)
 
 #### Purpose
