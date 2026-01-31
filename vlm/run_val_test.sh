@@ -4,7 +4,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --gres=gpu:1
-#SBATCH --time=06:00:00     # Increased to 2 hours to be safe for both datasets
+#SBATCH --time=12:00:00
 #SBATCH --output=vlm_output_%j.log
 
 # 1. Load Environment
@@ -13,14 +13,27 @@ source /home/dai01/Text_To_Face/miniconda_new/bin/activate
 # 2. Go to Directory
 cd $SLURM_SUBMIT_DIR
 
-echo "🚀 Starting Processing (Validation & Test Sets)..."
-echo "📂 Using local model cache: ./model_cache"
+echo "Starting Processing.."
+echo "Using local model cache: ./model_cache"
 
 # ==========================================
-# PHASE 1: PROCESS VALIDATION SET
+# PHASE 1: PROCESS TRAINING SET
 # ==========================================
 echo "----------------------------------------"
-echo "📸 Processing VALIDATION Set..."
+echo "Processing TRAINING Set..."
+echo "----------------------------------------"
+
+python vlm_pipeline.py \
+  --input_dir ./dataset_split/train/images \
+  --output_dir ./project_results/train \
+  --csv_file ./dataset_split/train/train.csv \
+  --cache_dir "./model_cache"
+
+# ==========================================
+# PHASE 2: PROCESS VALIDATION SET
+# ==========================================
+echo "----------------------------------------"
+echo "Processing VALIDATION Set..."
 echo "----------------------------------------"
 
 python vlm_pipeline.py \
@@ -30,10 +43,10 @@ python vlm_pipeline.py \
   --cache_dir "./model_cache"
 
 # ==========================================
-# PHASE 2: PROCESS TEST SET
+# PHASE 3: PROCESS TEST SET
 # ==========================================
 echo "----------------------------------------"
-echo "📸 Processing TEST Set..."
+echo "Processing TEST Set..."
 echo "----------------------------------------"
 
 python vlm_pipeline.py \
@@ -42,4 +55,4 @@ python vlm_pipeline.py \
   --csv_file ./dataset_split/test/test.csv \
   --cache_dir "./model_cache"
 
-echo "✅ All Jobs Complete!"
+echo "All Jobs Complete!"
