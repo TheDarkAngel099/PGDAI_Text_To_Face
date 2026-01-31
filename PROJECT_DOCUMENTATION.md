@@ -372,19 +372,33 @@ Fine-tune base diffusion models using LoRA for efficient parameter-efficient tra
 **Script:** `RealVizXL/train_text_to_image_lora_sdxl.py`
 
 **Key Parameters:**
-```python
-LEARNING_RATE = 1e-4
-BATCH_SIZE = 4
-EPOCHS = 100
-LORA_RANK = 64
-LORA_ALPHA = 64
-RESOLUTION = 768  # SDXL native resolution
-VALIDATION_STEPS = 100
+```bash
+RESOLUTION=320                    # 320x320 (native dataset resolution, no upscaling)
+BATCH_PER_GPU=4                   # Batch size per GPU
+GRAD_ACCUM=2                      # Gradient accumulation steps (effective batch = 4 × 2 = 8)
+LEARNING_RATE=1e-4                # Learning rate
+LR_SCHEDULER="linear"             # Linear decay scheduler for refined convergence
+LR_WARMUP_STEPS=100               # Warmup steps for stability
+MAX_TRAIN_STEPS=2715              # Total training steps (3 epochs × 905 steps/epoch)
+VALIDATION_STEPS=225              # Validation every ~1/4 epoch
+CHECKPOINT_STEPS=450              # Save checkpoint every half-epoch
+CHECKPOINTS_TOTAL_LIMIT=10        # Keep all checkpoints
+RANK=4                            # LoRA rank (dimension of update matrices)
+SEED=42                           # Random seed for reproducibility
 ```
+
+**Training Configuration:**
+- **Dataset:** ~7,238 images (Indian facial dataset)
+- **Epochs:** 3 complete passes
+- **Effective Batch Size:** 8 (4 per GPU × 2 gradient accumulation)
+- **Total Steps:** 2,715
+- **Training Time:** ~4-5 hours (single GPU)
+- **Output Checkpoints:** `checkpoint-96/`, `checkpoint-2700/` (final)
+- **Final Weights:** `pytorch_lora_weights.safetensors`
 
 **Job Submission:**
 ```bash
-bash RealVizXL/train_job.sh
+sbatch RealVizXL/train_job.sh
 ```
 
 #### Stable Diffusion 1.5 Training
@@ -392,13 +406,37 @@ bash RealVizXL/train_job.sh
 **Script:** `sd1.5/train_text_to_image_lora_sd15.py`
 
 **Key Parameters:**
-```python
-LEARNING_RATE = 5e-4
-BATCH_SIZE = 1-2
-EPOCHS = 50
-LORA_RANK = 16
-RESOLUTION = 512
+```bash
+RESOLUTION=320                    # 320x320 resolution (matching RealVisXL dataset)
+BATCH_PER_GPU=16                  # Batch size per GPU (larger than RealVisXL)
+GRAD_ACCUM=1                      # Gradient accumulation steps (no accumulation)
+LEARNING_RATE=5e-5                # Lower learning rate than RealVisXL
+LR_SCHEDULER="constant"           # Constant learning rate (no decay)
+LR_WARMUP_STEPS=0                 # No warmup period
+MAX_TRAIN_STEPS=5000              # Total training steps
+CHECKPOINT_STEPS=500              # Save checkpoint every 500 steps
+RANK=4                            # LoRA rank (dimension of update matrices)
+SEED=42                           # Random seed for reproducibility
 ```
+
+**Training Configuration:**
+- **Model:** runwayml/stable-diffusion-v1-5 (cached locally)
+- **Dataset:** ~7,238 images (Indian facial dataset)
+- **Batch Size:** 16 per GPU (higher throughput than RealVisXL)
+- **Learning Rate:** 5e-5 (more conservative than RealVisXL's 1e-4)
+- **Scheduler:** Constant (no decay)
+- **Total Steps:** 5,000
+- **Checkpoints:** Saved every 500 steps (~10 total)
+- **Expected Time:** ~2-3 hours (faster inference than SDXL)
+
+**Comparison with RealVisXL:**
+| Parameter | RealVisXL | SD 1.5 |
+|-----------|-----------|--------|
+| Batch Size | 4 | 16 |
+| Learning Rate | 1e-4 | 5e-5 |
+| Grad Accum | 2 | 1 |
+| LR Scheduler | Linear | Constant |
+| Total Steps | 2,715 | 5,000 |
 
 **Job Submission:**
 ```bash
