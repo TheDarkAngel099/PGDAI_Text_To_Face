@@ -847,7 +847,7 @@ bash Evaluation/eval_metrics.sh
 
 **Composite Score**
 - Range: typically 0-1 (higher is better)
-- Formula: `(1 - LPIPS + SSIM + CLIP) / 3`
+- Formula: `((1 - LPIPS) + SSIM + CLIP) / 3`
 - Measures: Balanced combination of all three metrics
 - Benchmark: Composite > 0.5 indicates good overall quality
 - Implementation: [metrics.py](Evaluation/metrics.py)
