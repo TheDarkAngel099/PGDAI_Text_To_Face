@@ -124,6 +124,7 @@ PGDAI_Text_To_Face/
 │   │
 │   └── sd1.5/
 │       ├── train_text_to_image_lora_sd15.py  # SD 1.5 LoRA training script
+│       ├── train_job_sd15_320.sh             # Job script (standard SD 1.5 LoRA training)
 │       └── train_job_sd15_320_unetonly.sh    # Job script (UNet only variant)
 │
 ├── Generation/                        # 🎨 Image Generation Scripts
@@ -364,7 +365,9 @@ RESOLUTION = 512
 
 **Job Submission:**
 ```bash
-bash sd1.5/train_job_sd15_320_unetonly.sh
+sbatch sd1.5/train_job_sd15_320.sh
+# Optional UNet-only variant
+# sbatch sd1.5/train_job_sd15_320_unetonly.sh
 ```
 
 #### Training Output
@@ -518,11 +521,10 @@ Assess model quality and compare base vs fine-tuned models.
 
 | Metric | Purpose | Tool |
 |--------|---------|------|
-| **FID (Fréchet Inception Distance)** | Image quality & diversity | PyTorch |
-| **LPIPS (Learned Perceptual Image Patch Similarity)** | Perceptual similarity | LPIPS library |
-| **CLIP Score** | Text-image alignment | OpenAI CLIP |
-| **Face Detection Rate** | Validity of generated faces | Face detection model |
-| **Cosine Similarity** | Prompt adherence | Embedding comparison |
+| **LPIPS** | Perceptual image similarity | LPIPS library |
+| **SSIM** | Structural similarity | scikit-image |
+| **CLIP Cosine** | Image semantic alignment | OpenAI CLIP |
+| **Composite Score** | Combined metric | (1 - LPIPS + SSIM + CLIP) / 3 |
 
 #### Evaluation Script
 ```bash
@@ -609,7 +611,7 @@ python Util/Demo_Param/generate_demo.py
    └─→ Save outputs
 
 7. EVALUATION (Evaluation/)
-   └─→ Calculate FID, LPIPS, CLIP scores
+   └─→ Calculate LPIPS, SSIM, CLIP, Composite scores
    └─→ Compare base vs fine-tuned
    └─→ Generate reports
 
@@ -628,14 +630,14 @@ python Util/Demo_Param/generate_demo.py
 
 #### RealVisXL-4.0
 - **Base Model:** Latest realistic generation
-- **Resolution:** 768x768 (SDXL architecture)
+- **Resolution:** 768x768 (SDXL architecture) 320 x 320 (for this project)
 - **Strengths:** Photorealistic outputs, high-quality details
 - **Use Case:** Primary model for production
 - **Fine-tuned Checkpoint:** `outputs_indian_finetuned_ckpt2700`
 
 #### Stable Diffusion 1.5
 - **Base Model:** Widely used, lighter weight
-- **Resolution:** 512x512
+- **Resolution:** 512x512, 320 x 320 (for this project)
 - **Strengths:** Faster inference, lower memory
 - **Use Case:** Testing, resource-constrained environments
 - **Fine-tuning:** Available in `Training/sd1.5/`
@@ -654,7 +656,7 @@ python Util/Demo_Param/generate_demo.py
 - **Parameters Saved:** ~1% of original model size
 - **Training Speed:** 10-50x faster than full fine-tuning
 - **Flexibility:** Easily mergeable with base model
-- **Typical Configuration:** rank=64, alpha=64
+- **Typical Configuration:** rank=4
 
 ---
 
@@ -678,13 +680,13 @@ cd Training/RealVizXL/
 vim train_job.sh  # Edit if needed
 
 # Submit job
-bash train_job.sh
+sbatch train_job.sh
 ```
 
 **Expected Timeline:**
 - Dataset: 10k images
-- Epochs: 100
-- Time: 12-24 hours (on GPU)
+- Epochs: 3
+- Time: 4-5 hours (on GPU)
 - GPU Memory: ~20GB
 
 #### 2. SD 1.5 Training
@@ -825,45 +827,51 @@ bash Evaluation/eval_metrics.sh
 
 ### Key Metrics Explained
 
-**FID (Fréchet Inception Distance)**
-- Range: 0-∞ (lower is better)
-- Measures: Statistical similarity between real and generated images
-- Benchmark: FID < 20 is typically excellent
-
 **LPIPS (Learned Perceptual Image Patch Similarity)**
 - Range: 0-1 (lower is better)
-- Measures: Perceptual difference perceived by humans
+- Measures: Perceptual difference between images using deep network features
 - Benchmark: LPIPS < 0.2 is high quality
+- Implementation: [metrics.py](Evaluation/metrics.py)
 
-**CLIP Score**
+**SSIM (Structural Similarity Index)**
+- Range: -1 to 1 (higher is better)
+- Measures: Structural similarity between two images (luminance, contrast, structure)
+- Benchmark: SSIM > 0.8 indicates high quality
+- Implementation: [metrics.py](Evaluation/metrics.py)
+
+**CLIP Cosine Similarity**
 - Range: 0-1 (higher is better)
-- Measures: Semantic alignment between text and image
+- Measures: Semantic alignment between images using CLIP embeddings
 - Benchmark: CLIP > 0.25 is good
+- Implementation: [metrics.py](Evaluation/metrics.py)
 
-**Face Detection Rate**
-- Percentage of generated images containing valid faces
-- Target: > 95%
+**Composite Score**
+- Range: typically 0-1 (higher is better)
+- Formula: `(1 - LPIPS + SSIM + CLIP) / 3`
+- Measures: Balanced combination of all three metrics
+- Benchmark: Composite > 0.5 indicates good overall quality
+- Implementation: [metrics.py](Evaluation/metrics.py)
 
 ### Comparison Report
 ```json
 {
   "base_model": {
-    "fid": 25.3,
     "lpips": 0.28,
-    "clip_score": 0.22,
-    "face_detection_rate": 0.92
+    "ssim": 0.72,
+    "clip_cosine": 0.22,
+    "composite_score": 0.55
   },
   "finetuned_model": {
-    "fid": 18.7,
     "lpips": 0.18,
-    "clip_score": 0.31,
-    "face_detection_rate": 0.97
+    "ssim": 0.85,
+    "clip_cosine": 0.31,
+    "composite_score": 0.66
   },
   "improvements": {
-    "fid_improvement": "26% better",
     "lpips_improvement": "35% better",
+    "ssim_improvement": "18% better",
     "clip_improvement": "41% better",
-    "face_detection_improvement": "5% better"
+    "composite_improvement": "20% better"
   }
 }
 ```
