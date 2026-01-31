@@ -44,8 +44,8 @@ export CHECKPOINTS_TOTAL_LIMIT=10      # Save all checkpoints (6 total expected)
 export RANK=4                          # LoRA rank (dimension of update matrices)
 export SEED=42
 
-# Validation prompt (quick sanity check)
-export VAL_PROMPT="a person, frontal mugshot view, centered face, neutral expression, plain white background, high quality, detailed"
+# Validation prompt (quick sanity check) - detailed forensic format matching training data
+export VAL_PROMPT="25-year-old Indian male, short black hair, full beard, smooth forehead, brown eyes, medium size nose, thin lips, average size ears, no visible tattoos or scars"
 
 ################################################################################
 #                        >>> END OF EDITABLE VARIABLES <<<
