@@ -64,7 +64,7 @@ PGDAI_Text_To_Face/
 ├── VLM/                          # Vision Language Model pipeline
 │   ├── vlm_pipeline.py          # Main VLM captioning pipeline
 │   ├── download_llava.py        # Model download utilities
-│   └── run_val_test.sh          # Validation scripts
+│   └── run_val_test.sh          
 │
 ├── Training/                     # Fine-tuning scripts
 │   ├── RealVizXL/              # RealVisXL-4.0 fine-tuning
