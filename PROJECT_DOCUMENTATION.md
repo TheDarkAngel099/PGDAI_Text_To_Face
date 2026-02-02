@@ -40,12 +40,12 @@ This project implements a **scalable generative AI pipeline** that fine-tunes ad
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    User Input (Web UI)                       │
+│                    User Input (Web UI)                      │
 │              (Streamlit Frontend Application)               │
 └────────────────────────┬────────────────────────────────────┘
                          │
 ┌────────────────────────▼────────────────────────────────────┐
-│                   FastAPI Gateway                            │
+│                   FastAPI Gateway                           │
 │         (Request routing & API orchestration)               │
 └────────────────────────┬────────────────────────────────────┘
                          │
@@ -60,9 +60,9 @@ This project implements a **scalable generative AI pipeline** that fine-tunes ad
         │                │                │
         └────────────────┼────────────────┘
                          │
-        ┌────────────────▼────────────────┐
-        │     Generated Output             │
-        │  (Descriptions + Face Images)    │
+        ┌────────────────▼───────────────┐
+        │     Generated Output           │
+        │  (Descriptions + Face Images)  │
         └────────────────────────────────┘
 ```
 
