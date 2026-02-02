@@ -52,11 +52,11 @@ This project implements a **scalable generative AI pipeline** that fine-tunes ad
         ┌────────────────┼────────────────┐
         │                │                │
    ┌────▼────┐    ┌────▼────┐    ┌────▼────┐
-   │   VLM   │    │ Diffusion│    │  Cache  │
-   │ LLaVA   │    │ Models   │    │ Manager │
-   │Pipeline │    │ (SDXL,   │    │         │
-   │         │    │  SD1.5)  │    │         │
-   └─────────┘    └──────────┘    └─────────┘
+   │   VLM   │    │Diffusion│    │  Cache  │
+   │ LLaVA   │    │ Models  │    │ Manager │
+   │Pipeline │    │ (SDXL,  │    │         │
+   │         │    │  SD1.5) │    │         │
+   └─────────┘    └─────────┘    └─────────┘
         │                │                │
         └────────────────┼────────────────┘
                          │
